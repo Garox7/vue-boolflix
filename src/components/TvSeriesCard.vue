@@ -13,6 +13,7 @@ export default {
   props: {
     cover: String,
     title: String,
+    language: String,
     vote: Number,
     story: String,
   },

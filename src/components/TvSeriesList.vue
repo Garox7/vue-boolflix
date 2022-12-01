@@ -5,6 +5,7 @@
       :key="series.id"
       :cover="series.poster_path"
       :title="series.name"
+      :language="series.original_language"
       :vote="series.vote_average"
       :story="series.overview"
     />
