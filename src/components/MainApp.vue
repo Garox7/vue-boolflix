@@ -1,23 +1,20 @@
 <template>
   <div>
-    <h1>FILM</h1>
-    <ul v-for="objmovie in arrMovies" :key="objmovie.id">
-      <li>
-        {{objmovie.title}}
-      </li>
-    </ul>
-    <h1>Serie TV</h1>
-    <ul v-for="objseries in arrTvSeries" :key="objseries.id">
-      <li>
-        {{objseries.name}}
-      </li>
-    </ul>
+    <MovieList :MovieList="arrMovies"/>
+    <TvSeriesList :TvSeriesList="arrTvSeries"/>
   </div>
 </template>
 
 <script>
+import MovieList from '@/components/MoviesList.vue';
+import TvSeriesList from '@/components/TvSeriesList.vue';
+
 export default {
   name: 'MainApp',
+  components: {
+    MovieList,
+    TvSeriesList,
+  },
   props: {
     arrMovies: Array,
     arrTvSeries: Array,

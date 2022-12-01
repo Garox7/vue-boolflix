@@ -2,8 +2,8 @@
   <div>
     <HeaderApp @Searching="getSearchString"/>
     <MainApp
-      :arr-movies="arrMovies"
-      :arr-tvseries="arrTvSeries"
+      :arrMovies="arrMovies"
+      :arrTvSeries="arrTvSeries"
     />
   </div>
 </template>
