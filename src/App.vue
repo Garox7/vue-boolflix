@@ -68,4 +68,9 @@ export default {
 html {
   font-family: 'Inter', sans-serif;
 }
+
+body {
+  background-color: $body-background-color;
+  margin-top: $header-h;
+}
 </style>

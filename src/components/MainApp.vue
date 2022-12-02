@@ -1,7 +1,7 @@
 <template>
   <div>
-    <MovieList :MovieList="arrMovies"/>
-    <TvSeriesList :TvSeriesList="arrTvSeries"/>
+      <MovieList :MovieList="arrMovies"/>
+      <TvSeriesList :TvSeriesList="arrTvSeries"/>
   </div>
 </template>
 
