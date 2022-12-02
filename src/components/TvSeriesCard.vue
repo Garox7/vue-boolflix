@@ -49,7 +49,7 @@ export default {
 
 <style lang="scss" scoped>
 .boxart__card {
-  flex: 1 0 calc(100% / 4 - 3rem);
+  flex: 1 0 calc(100% / 5 - 4rem);
   color: white;
   min-width: 200px;
   height: 350px;

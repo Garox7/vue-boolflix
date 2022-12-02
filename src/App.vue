@@ -4,6 +4,7 @@
     <MainApp
       :arrMovies="arrMovies"
       :arrTvSeries="arrTvSeries"
+      :playSearch="playSearch"
     />
   </div>
 </template>
@@ -24,37 +25,42 @@ export default {
       baseApiUrl: 'https://api.themoviedb.org/3',
       apiKey: '0762e7bce5e66e0277c5c0d33a1112fc',
       resultsLanguage: 'it-IT',
+      playSearch: false,
       arrMovies: [],
       arrTvSeries: [],
     };
   },
   methods: {
     getSearchString(searchString) {
-      // Ricerca FILM
-      axios.get(`${this.baseApiUrl}/search/movie`, {
-        params: {
-          api_key: this.apiKey,
-          language: this.resultsLanguage,
-          query: searchString,
-        },
-      })
-        .then((responseAxios) => {
-          this.arrMovies = responseAxios.data.results;
-          console.log('film:', this.arrMovies); // DEBUG
-        });
+      if (searchString !== '') {
+        this.playSearch = true;
 
-      // Ricerca SERIE TV
-      axios.get(`${this.baseApiUrl}/search/tv`, {
-        params: {
-          api_key: this.apiKey,
-          language: this.resultsLanguage,
-          query: searchString,
-        },
-      })
-        .then((responseAxios) => {
-          this.arrTvSeries = responseAxios.data.results;
-          console.log('serie Tv:', this.arrTvSeries); // DEBUG
-        });
+        // Ricerca FILM
+        axios.get(`${this.baseApiUrl}/search/movie`, {
+          params: {
+            api_key: this.apiKey,
+            language: this.resultsLanguage,
+            query: searchString,
+          },
+        })
+          .then((responseAxios) => {
+            this.arrMovies = responseAxios.data.results;
+            console.log('film:', this.arrMovies); // DEBUG
+          });
+
+        // Ricerca SERIE TV
+        axios.get(`${this.baseApiUrl}/search/tv`, {
+          params: {
+            api_key: this.apiKey,
+            language: this.resultsLanguage,
+            query: searchString,
+          },
+        })
+          .then((responseAxios) => {
+            this.arrTvSeries = responseAxios.data.results;
+            console.log('serie Tv:', this.arrTvSeries); // DEBUG
+          });
+      }
     },
   },
 };

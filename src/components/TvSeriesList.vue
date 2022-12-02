@@ -44,22 +44,25 @@ export default {
 @import '@/assets/scss/variables';
 
 .container {
-  max-width: 1000px;
+  // max-width: 1000px; /* test for scroll layout */
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 2rem; /* test for scroll layout */
   display: flex;
   flex-direction: column;
   gap: 1rem;
 
   .title__boxart {
     color: $title-boxart-color;
+    padding: 0 4%; /* test for scroll layout */
   }
 
   .boxart__container {
     display: flex;
-    flex-wrap: wrap;
+    // flex-wrap: wrap; /* test for scroll layout */
     justify-content: space-between;
+    padding: 0 0 15px 4%; /* test for scroll layout */
     gap: 2rem 1rem;
+    overflow-x: scroll; /* test for scroll layout */
   }
 }
 </style>

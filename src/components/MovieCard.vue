@@ -49,7 +49,7 @@ export default {
 
 <style lang="scss" scoped>
 .boxart__card {
-  flex: 1 0 calc(100% / 4 - 3rem);
+  flex: 1 0 calc(100% / 5 - 4rem);
   color: white;
   min-width: 200px;
   height: 350px;
@@ -60,7 +60,7 @@ export default {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: top;
+    object-position: center;
     border-radius: 8px;
     transition: all .15s ease-in-out;
   }
@@ -92,7 +92,6 @@ export default {
 
     .story {
       overflow-y: scroll;
-
     }
   }
 

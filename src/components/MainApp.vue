@@ -1,7 +1,9 @@
 <template>
   <div>
-      <MovieList :MovieList="arrMovies"/>
-      <TvSeriesList :TvSeriesList="arrTvSeries"/>
+    <div v-if="(playSearch != false)">
+        <MovieList :MovieList="arrMovies"/>
+        <TvSeriesList :TvSeriesList="arrTvSeries"/>
+    </div>
   </div>
 </template>
 
@@ -18,6 +20,7 @@ export default {
   props: {
     arrMovies: Array,
     arrTvSeries: Array,
+    playSearch: Boolean,
   },
 };
 </script>
