@@ -1,10 +1,13 @@
 <template>
   <div>
-    <HeaderApp @Searching="getSearchString"/>
+    <HeaderApp
+      @Searching="getSearchString"
+    />
     <MainApp
+      :arrPopular="arrPopular"
+      :playSearch="playSearch"
       :arrMovies="arrMovies"
       :arrTvSeries="arrTvSeries"
-      :playSearch="playSearch"
     />
   </div>
 </template>
@@ -26,9 +29,22 @@ export default {
       apiKey: '0762e7bce5e66e0277c5c0d33a1112fc',
       resultsLanguage: 'it-IT',
       playSearch: false,
+      arrPopular: [],
       arrMovies: [],
       arrTvSeries: [],
     };
+  },
+  created() {
+    axios.get(`${this.baseApiUrl}/movie/popular`, {
+      params: {
+        api_key: this.apiKey,
+        language: this.resultsLanguage,
+      },
+    })
+      .then((responseAxios) => {
+        this.arrPopular = responseAxios.data.results;
+        console.log('Popolare', this.arrPopular); // DEBUG
+      });
   },
   methods: {
     getSearchString(searchString) {
@@ -77,6 +93,6 @@ html {
 
 body {
   background-color: $body-background-color;
-  margin-top: $header-h;
+  position: relative;
 }
 </style>

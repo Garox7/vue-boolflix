@@ -4,7 +4,7 @@ module.exports = {
     node: true,
   },
   extends: [
-    'plugin:vue/raccommended',
+    'plugin:vue/essential',
     '@vue/airbnb',
   ],
   parserOptions: {

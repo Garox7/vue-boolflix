@@ -1,8 +1,6 @@
 <template>
   <header>
-    <div class="logo">
-      <h1>BOOLFLIX</h1>
-    </div>
+    <a class="logo"><h1>BOOLFLIX</h1></a>
     <div>
       <form @submit.prevent="$emit('Searching', searchString)">
         <label for="input-search">
@@ -34,7 +32,7 @@ export default {
 @import '@/assets/scss/variables';
 
 header {
-  background-color: $header-bg-color;
+  background-color: $header-bg-color-initial;
   background-image: $header-bg-image-color;
   position: fixed;
   top: 0;
@@ -44,6 +42,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 10;
 
   .logo {
     color: $header-logo-color;

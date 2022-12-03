@@ -1,7 +1,7 @@
 <template>
   <div class="boxart__card">
     <img v-if="cover"
-      :src="(baseImgUrl + sizeImg + cover + apiKey)"
+      :src="cover"
       :alt="title"
     >
     <div v-else class="default__no-image">B</div>
@@ -13,14 +13,18 @@
         <lang-flag :iso="language" />
       </div>
       <div class="score">
-        <font-awesome-icon v-for="i in vote.score"
-          :key="i"
-          icon="fa-solid fa-star"
-        />
-        <font-awesome-icon v-for="i in (vote.maxVote - vote.score)"
-          :key="i"
-          icon="fa-regular fa-star"
-        />
+        <span>
+          <font-awesome-icon v-for="i in vote.score"
+            :key="i"
+            icon="fa-solid fa-star"
+          />
+        </span>
+        <span>
+          <font-awesome-icon v-for="i in (vote.maxVote - vote.score)"
+            :key="i"
+            icon="fa-regular fa-star"
+          />
+        </span>
       </div>
       <p class="story">{{ story }}</p>
     </div>
@@ -37,22 +41,15 @@ export default {
     vote: Object,
     story: String,
   },
-  data() {
-    return {
-      baseImgUrl: 'https://image.tmdb.org/t/p/',
-      sizeImg: 'w342/',
-      apiKey: '?api_key=0762e7bce5e66e0277c5c0d33a1112fc',
-    };
-  },
 };
 </script>
 
 <style lang="scss" scoped>
 .boxart__card {
-  flex: 1 0 calc(100% / 5 - 4rem);
+  flex: 1 0 calc(100% / 4 - 3rem);
   color: white;
-  min-width: 200px;
-  height: 350px;
+  min-width: 245px;
+  height: 140px;
   border-radius: 8px;
   overflow: hidden;
 
