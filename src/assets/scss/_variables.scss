@@ -1,21 +1,26 @@
-//general setting
+//color palette
 $body-background-color: #141414;
-$title-boxart-color: #e5e5e5;
 
-// HEADER
 $header-bg-color-initial: transparent;
 $header-bg-color: #141414;
 $header-bg-image-color: linear-gradient(180deg, rgba(0,0,0,.7) 10%,transparent);
 $header-logo-color: #ee2414;
-$header-h: 68px;
 
-//HERO SLIDE
-$hero-w: 100vw;
-$hero-h: 55%;
-$margin-info-b: 4%;
 $play-btn-bg: #fff;
 $play-btn-color: #000;
 $play-btn-bg-h: #ffffffbf;
 $info-btn-bg: #6d6d6eb3;
 $info-btn-color: #fff;
 $info-btn-bg-h: #6d6d6e66;
+
+$title-boxart-color: #e5e5e5;
+$bg-boxart: #141414;
+
+
+// HEADER GENERAL SETTING
+$header-h: 68px;
+
+//HERO SLIDE GENERAL SETTING
+$hero-w: 100vw;
+$hero-h: 20%;
+$margin-info-b: 4%;

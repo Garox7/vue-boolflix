@@ -3,8 +3,8 @@
     <img :src="cover" alt="">
 
     <div class="hero__info">
-      <h1>{{ arrPopular[0].title }}</h1>
-      <p>{{ arrPopular[0].overview }}</p>
+      <h1>{{ arrPopular[randomSlideLen].title }}</h1>
+      <p>{{ arrPopular[randomSlideLen].overview }}</p>
 
       <div class="hero__button">
         <button class="play__btn">Riproduci</button>
@@ -24,6 +24,7 @@ export default {
   props: {
     arrPopular: Array,
     cover: String,
+    randomSlideLen: Number,
   },
   data() {
     return {
@@ -41,8 +42,8 @@ export default {
 
 .hero__slide {
   width: $hero-w;
-  height: $hero-h;
-  // position: relative;
+  height: 80vh;
+  position: relative;
 
   img {
     width: 100%;
@@ -52,26 +53,34 @@ export default {
   }
 
   .hero__info {
+    background: linear-gradient(90deg,rgba(0,0,0,.7),transparent 85%);
+    backdrop-filter: blur(1px);
     color: white;
     position: absolute;
-    left: 5%;
-    bottom: 60%;
-    width: 30%;
-    transform: translate(0, 50%);
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 40%;
+    padding-left: 4%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
     h1 {
-      font-size: 50px;
+      font-size: 45px;
+
+      line-height: 1;
       margin-bottom: $margin-info-b;
     }
 
     p {
       overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 4;
-        line-clamp: 4;
-        -webkit-box-orient: vertical;
-        margin-bottom: $margin-info-b;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      line-clamp: 4;
+      -webkit-box-orient: vertical;
+      margin-bottom: $margin-info-b;
     }
   }
 
