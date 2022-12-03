@@ -74,6 +74,7 @@ export default {
     }
 
     p {
+      font-size: 1.2vw;
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;

@@ -20,22 +20,48 @@
         </div>
       </div>
       <div class="main__container">
-          <h3 class="title__boxart">Serie TV da vedere tutte d'un fiato</h3>
-          <div class="boxart__container">
-            <MovieCard v-for="movie in arrPopularTv"
-              :key="movie.id"
-              :cover="getCoverImg(sizeImgCard, movie.backdrop_path)"
-              :title="movie.name"
-              :language="movie.original_language"
-              :vote="convertScore(movie.vote_average)"
-              :story="movie.overview"
-            />
-          </div>
+        <h3 class="title__boxart">Serie TV da vedere tutte d'un fiato</h3>
+        <div class="boxart__container">
+          <MovieCard v-for="movie in arrPopularTv"
+            :key="movie.id"
+            :cover="getCoverImg(sizeImgCard, movie.backdrop_path)"
+            :title="movie.name"
+            :language="movie.original_language"
+            :vote="convertScore(movie.vote_average)"
+            :story="movie.overview"
+          />
         </div>
+      </div>
+      <div class="main__container">
+        <h3 class="title__boxart">Top Film in Italia</h3>
+        <div class="boxart__container">
+          <MovieCard v-for="movie in arrTopRated"
+            :key="movie.id"
+            :cover="getCoverImg(sizeImgCard, movie.backdrop_path)"
+            :title="movie.title"
+            :language="movie.original_language"
+            :vote="convertScore(movie.vote_average)"
+            :story="movie.overview"
+          />
+        </div>
+      </div>
+      <div class="main__container">
+        <h3 class="title__boxart">Serie TV acclamate dalla critica</h3>
+        <div class="boxart__container">
+          <MovieCard v-for="movie in arrTopRatedTv"
+            :key="movie.id"
+            :cover="getCoverImg(sizeImgCard, movie.backdrop_path)"
+            :title="movie.name"
+            :language="movie.original_language"
+            :vote="convertScore(movie.vote_average)"
+            :story="movie.overview"
+          />
+        </div>
+      </div>
     </div>
 
     <!-- viene mostrato solo se viene effettuata la ricerca -->
-    <div v-if="(playSearch != false)">
+    <div v-else>
 
         <!-- MOVIE  -->
       <section>
@@ -89,6 +115,8 @@ export default {
   props: {
     arrPopular: Array,
     arrPopularTv: Array,
+    arrTopRated: Array,
+    arrTopRatedTv: Array,
     playSearch: Boolean,
     arrMovies: Array,
     arrTvSeries: Array,
@@ -158,6 +186,8 @@ export default {
     color: $title-boxart-color;
     padding: 0 4%; /* test for scroll layout */
     z-index: 10;
+    font-weight: 500;
+    font-size: 1.4vw;
   }
 
   .hero__container__card, .boxart__container {

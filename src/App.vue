@@ -6,6 +6,8 @@
     <MainApp
       :arrPopular="arrPopular"
       :arrPopularTv="arrPopularTv"
+      :arrTopRated="arrTopRated"
+      :arrTopRatedTv="arrTopRatedTv"
       :playSearch="playSearch"
       :arrMovies="arrMovies"
       :arrTvSeries="arrTvSeries"
@@ -32,6 +34,8 @@ export default {
       playSearch: false,
       arrPopular: [],
       arrPopularTv: [],
+      arrTopRated: [],
+      arrTopRatedTv: [],
       arrMovies: [],
       arrTvSeries: [],
     };
@@ -63,6 +67,31 @@ export default {
       .then((responseAxios) => {
         this.arrPopularTv = responseAxios.data.results;
         console.log('SerieTv del momento', this.arrPopular); // DEBUG
+      });
+
+    // Film Più votati in Italia
+    axios.get(`${this.baseApiUrl}/movie/top_rated`, {
+      params: {
+        api_key: this.apiKey,
+        language: this.resultsLanguage,
+        region: 'IT',
+      },
+    })
+      .then((responseAxios) => {
+        this.arrTopRated = responseAxios.data.results;
+        console.log('Top Rated:', this.arrTopRated); // DEBUG
+      });
+
+    // Serie Tv Più votate
+    axios.get(`${this.baseApiUrl}/tv/top_rated`, {
+      params: {
+        api_key: this.apiKey,
+        language: this.resultsLanguage,
+      },
+    })
+      .then((responseAxios) => {
+        this.arrTopRatedTv = responseAxios.data.results;
+        console.log('Top Rated Serie TV:', this.arrTopRatedTv); // DEBUG
       });
   },
   methods: {
