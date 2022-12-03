@@ -5,6 +5,7 @@
     />
     <MainApp
       :arrPopular="arrPopular"
+      :arrPopularTv="arrPopularTv"
       :playSearch="playSearch"
       :arrMovies="arrMovies"
       :arrTvSeries="arrTvSeries"
@@ -30,11 +31,13 @@ export default {
       resultsLanguage: 'it-IT',
       playSearch: false,
       arrPopular: [],
+      arrPopularTv: [],
       arrMovies: [],
       arrTvSeries: [],
     };
   },
   created() {
+    // Film POPOLARI
     axios.get(`${this.baseApiUrl}/movie/popular`, {
       params: {
         api_key: this.apiKey,
@@ -42,8 +45,24 @@ export default {
       },
     })
       .then((responseAxios) => {
-        this.arrPopular = responseAxios.data.results;
-        console.log('Popolare', this.arrPopular); // DEBUG
+        responseAxios.data.results.forEach((movie) => {
+          if (movie.overview !== '') {
+            this.arrPopular.push(movie);
+          }
+        });
+        console.log('I titoli del momento:', this.arrPopular); // DEBUG
+      });
+
+    // SerieTv POPOLARI
+    axios.get(`${this.baseApiUrl}/tv/popular`, {
+      params: {
+        api_key: this.apiKey,
+        language: this.resultsLanguage,
+      },
+    })
+      .then((responseAxios) => {
+        this.arrPopularTv = responseAxios.data.results;
+        console.log('SerieTv del momento', this.arrPopular); // DEBUG
       });
   },
   methods: {
