@@ -67,7 +67,9 @@
           </div>
 
         </div>
-
+        <SimilarTitle
+          :similarMovie="similarMovie"
+        />
       </div>
 
     </div>
@@ -75,8 +77,13 @@
 </template>
 
 <script>
+import SimilarTitle from '@/components/SimilarTitle.vue';
+
 export default {
   name: 'MovieCardInfo',
+  components: {
+    SimilarTitle,
+  },
   props: {
     backdrop: String,
     title: String,
@@ -87,6 +94,7 @@ export default {
     releaseDate: String,
     runtime: Number,
     numOfSeason: Number,
+    similarMovie: Array,
   },
   data() {
     return {

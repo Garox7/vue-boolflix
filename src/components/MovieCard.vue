@@ -64,6 +64,8 @@
       :arrGenres="arrGenres"
       :releaseDate="releaseDate"
       :runtime="runtime"
+      :numOfSeason="numOfSeason"
+      :similarMovie="similarMovie"
       @hiddenMovieCardInfo="hiddenMovieCardInfo"
     />
   </div>
@@ -96,11 +98,14 @@ export default {
       resultsLanguage: 'it-IT',
       arrGenres: [],
       releaseDate: '',
+      numOfSeason: 0,
       runtime: 0,
+      similarMovie: [],
     };
   },
   methods: {
-    // raccoglie genere e data di rilascio di film
+    // raccoglie ulteriori dati all'apertura di CardInfo
+    // Andrebbero spostati in MovieCardInfo???
     getDetails() {
       if (this.movie) {
         axios.get(`${this.baseApiUrl}/movie/${this.id}`, {
@@ -113,12 +118,25 @@ export default {
             this.arrGenres = responseAxios.data.genres;
             this.releaseDate = responseAxios.data.release_date;
             this.runtime = responseAxios.data.runtime;
-            console.log('Generi', this.arrGenres); // DEBUG
-            console.log('Data di rilascio:', this.releaseDate); // DEBUG
-            console.log('Durata:', this.runtime); // DEBUG
-          });
 
+            console.log('Genere Film:', this.arrGenres); // DEBUG
+            console.log('Data di rilascio Film:', this.releaseDate); // DEBUG
+            console.log('Durata FIlm:', this.runtime); // DEBUG
+          });
         console.log('è un film!'); // DEBUG
+
+        // raccogli i film simili
+        axios.get(`${this.baseApiUrl}/movie/${this.id}/similar`, {
+          params: {
+            api_key: this.apiKey,
+            language: this.resultsLanguage,
+          },
+        })
+          .then((responseAxios) => {
+            this.similarMovie = responseAxios.data.results;
+
+            console.log('Altri film simili', this.arrGenres); // DEBUG
+          });
       } else {
         axios.get(`${this.baseApiUrl}/tv/${this.id}`, {
           params: {
@@ -128,15 +146,21 @@ export default {
         })
           .then((responseAxios) => {
             this.arrGenres = responseAxios.data.genres;
-            console.log('Generi', this.arrGenres); // DEBUG
+            this.releaseDate = responseAxios.data.first_air_date;
+            this.numOfSeason = responseAxios.data.number_of_seasons;
+
+            console.log('Generi Serie Tv:', this.arrGenres); // DEBUG
+            console.log('Data di rilascio Serie Tv:', this.releaseDate); // DEBUG
+            console.log('Numero di stagioni', this.numOfSeason); // DEBUG
           });
-        console.log('è una serie tv'); // DEBUG
+        console.log('è una serie tv!'); // DEBUG
       }
     },
     // Apre MovieCardInfo
     showMovieCardInfo() {
       this.showCardInfo = true;
       document.body.classList.add('no-scroll');
+      // genera la funzione di raccolta di informazioni sul singolo titolo
       this.getDetails();
     },
     hiddenMovieCardInfo(hidden) {
