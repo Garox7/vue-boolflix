@@ -1,7 +1,5 @@
 <template>
-  <div class="hero__slide">
-    <img :src="cover" alt="">
-
+  <div class="hero__slide" :style="{backgroundImage: `url(${cover})`}">
     <div class="hero__info">
       <h1>{{ arrPopular[randomSlideLen].title }}</h1>
       <p>{{ arrPopular[randomSlideLen].overview }}</p>
@@ -43,32 +41,23 @@ export default {
 .hero__slide {
   width: $hero-w;
   height: 80vh;
-  position: relative;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
-  }
+  background-position: top;
+  background-size: cover;
+  background-repeat: no-repeat;
 
   .hero__info {
-    background: linear-gradient(90deg,rgba(0,0,0,.7),transparent 85%);
-    backdrop-filter: blur(1px);
+    background: linear-gradient(90deg,rgba(0,0,0,.8),transparent 85%);
     color: white;
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
     width: 40%;
+    height: 100%;
     padding-left: 4%;
+    padding-bottom: 4%;
     display: flex;
     flex-direction: column;
     justify-content: center;
 
     h1 {
       font-size: 45px;
-
       line-height: 1;
       margin-bottom: $margin-info-b;
     }
