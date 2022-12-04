@@ -33,7 +33,7 @@
 
         <div class="controls__left">
           <div class="my__icon__container">
-            <font-awesome-icon icon="fa-solid fa-play" class="my__icon play" />
+            <font-awesome-icon icon="fa-solid fa-play" class="my__icon" />
           </div>
           <div class="my__icon__container">
             <font-awesome-icon icon="fa-solid fa-plus" class="my__icon" />
@@ -44,24 +44,105 @@
         </div>
 
         <div class="controls__right">
-          <div class="my__icon__container">
+          <div
+            @click="showMovieCardInfo"
+            @keydown="showMovieCardInfo"
+            class="my__icon__container"
+          >
             <font-awesome-icon icon="fa-solid fa-chevron-down" class="my__icon" />
           </div>
         </div>
       </div>
     </div>
+    <MovieCardInfo v-show="showCardInfo"
+      :backdrop="backdrop"
+      :title="title"
+      :language="language"
+      :vote="vote"
+      :story="story"
+      :id="id"
+      :arrGenres="arrGenres"
+      :releaseDate="releaseDate"
+      :runtime="runtime"
+      @hiddenMovieCardInfo="hiddenMovieCardInfo"
+    />
   </div>
 </template>
 
 <script>
+import MovieCardInfo from '@/components/MovieCardInfo.vue';
+import axios from 'axios';
+
 export default {
   name: 'MovieCard',
+  components: {
+    MovieCardInfo,
+  },
   props: {
     cover: String,
     title: String,
     language: String,
     vote: Object,
     story: String,
+    backdrop: String,
+    id: Number,
+    movie: Boolean,
+  },
+  data() {
+    return {
+      showCardInfo: false,
+      baseApiUrl: 'https://api.themoviedb.org/3',
+      apiKey: '0762e7bce5e66e0277c5c0d33a1112fc',
+      resultsLanguage: 'it-IT',
+      arrGenres: [],
+      releaseDate: '',
+      runtime: 0,
+    };
+  },
+  methods: {
+    // raccoglie genere e data di rilascio di film
+    getDetails() {
+      if (this.movie) {
+        axios.get(`${this.baseApiUrl}/movie/${this.id}`, {
+          params: {
+            api_key: this.apiKey,
+            language: this.resultsLanguage,
+          },
+        })
+          .then((responseAxios) => {
+            this.arrGenres = responseAxios.data.genres;
+            this.releaseDate = responseAxios.data.release_date;
+            this.runtime = responseAxios.data.runtime;
+            console.log('Generi', this.arrGenres); // DEBUG
+            console.log('Data di rilascio:', this.releaseDate); // DEBUG
+            console.log('Durata:', this.runtime); // DEBUG
+          });
+
+        console.log('è un film!'); // DEBUG
+      } else {
+        axios.get(`${this.baseApiUrl}/tv/${this.id}`, {
+          params: {
+            api_key: this.apiKey,
+            language: this.resultsLanguage,
+          },
+        })
+          .then((responseAxios) => {
+            this.arrGenres = responseAxios.data.genres;
+            console.log('Generi', this.arrGenres); // DEBUG
+          });
+        console.log('è una serie tv'); // DEBUG
+      }
+    },
+    // Apre MovieCardInfo
+    showMovieCardInfo() {
+      this.showCardInfo = true;
+      document.body.classList.add('no-scroll');
+      this.getDetails();
+    },
+    hiddenMovieCardInfo(hidden) {
+      this.showCardInfo = hidden;
+      document.body.classList.remove('no-scroll');
+    },
   },
 };
 </script>
@@ -77,7 +158,7 @@ export default {
   height: 320px;
   border-radius: 8px;
   overflow: hidden;
-  position: relative;
+  // position: relative;
   transition: all .2s ease;
 
   img {

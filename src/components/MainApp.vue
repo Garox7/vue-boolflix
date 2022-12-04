@@ -12,10 +12,13 @@
           <MovieCard v-for="movie in arrPopular"
             :key="movie.id"
             :cover="getCoverImg(sizeImgCard, movie.poster_path)"
+            :backdrop="getCoverImg(sizeImgHero, movie.backdrop_path)"
             :title="movie.title"
             :language="movie.original_language"
             :vote="convertScore(movie.vote_average)"
             :story="movie.overview"
+            :id="movie.id"
+            :movie="true"
           />
         </div>
       </div>
@@ -25,10 +28,13 @@
           <MovieCard v-for="movie in arrPopularTv"
             :key="movie.id"
             :cover="getCoverImg(sizeImgCard, movie.poster_path)"
+            :backdrop="getCoverImg(sizeImgHero, movie.backdrop_path)"
             :title="movie.name"
             :language="movie.original_language"
             :vote="convertScore(movie.vote_average)"
             :story="movie.overview"
+            :id="movie.id"
+            :movie="false"
           />
         </div>
       </div>
@@ -38,6 +44,7 @@
           <MovieCard v-for="movie in arrTopRated"
             :key="movie.id"
             :cover="getCoverImg(sizeImgCard, movie.poster_path)"
+            :backdrop="getCoverImg(sizeImgHero, movie.backdrop_path)"
             :title="movie.title"
             :language="movie.original_language"
             :vote="convertScore(movie.vote_average)"
@@ -51,6 +58,7 @@
           <MovieCard v-for="movie in arrTopRatedTv"
             :key="movie.id"
             :cover="getCoverImg(sizeImgCard, movie.poster_path)"
+            :backdrop="getCoverImg(sizeImgHero, movie.backdrop_path)"
             :title="movie.name"
             :language="movie.original_language"
             :vote="convertScore(movie.vote_average)"
@@ -70,6 +78,7 @@
             <MovieCard v-for="movie in arrMovies"
               :key="movie.id"
               :cover="getCoverImg(sizeImgCard, movie.poster_path)"
+              :backdrop="getCoverImg(sizeImgHero, movie.backdrop_path)"
               :title="movie.title"
               :language="movie.original_language"
               :vote="convertScore(movie.vote_average)"
@@ -85,13 +94,14 @@
           <div class="container">
             <h3 class="title__boxart">Serie Tv</h3>
             <div class="boxart__container">
-              <MovieCard v-for="series in arrTvSeries"
-                :key="series.id"
-                :cover="getCoverImg(sizeImgCard, series.poster_path)"
-                :title="series.name"
-                :language="series.original_language"
-                :vote="convertScore(series.vote_average)"
-                :story="series.overview"
+              <MovieCard v-for="movie in arrTvSeries"
+                :key="movie.id"
+                :cover="getCoverImg(sizeImgCard, movie.poster_path)"
+                :backdrop="getCoverImg(sizeImgHero, movie.backdrop_path)"
+                :title="movie.name"
+                :language="movie.original_language"
+                :vote="convertScore(movie.vote_average)"
+                :story="movie.overview"
               />
             </div>
           </div>
@@ -127,6 +137,7 @@ export default {
       sizeImgHero: 'w1280',
       apiKey: '?api_key=0762e7bce5e66e0277c5c0d33a1112fc',
       randomSlideLen: 0,
+      movie: true,
     };
   },
   created() {

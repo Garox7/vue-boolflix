@@ -143,4 +143,8 @@ body {
   background-color: $body-background-color;
   position: relative;
 }
+
+.no-scroll {
+  overflow: hidden;
+}
 </style>
