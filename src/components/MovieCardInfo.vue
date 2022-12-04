@@ -48,9 +48,13 @@
                 </span>
               </div>
               <p>{{ releaseDate.slice(0, 4) }}</p>
-              <p>{{ runtime + ' min' }}</p>
+              <p v-if="runtime != ''">{{ runtime + ' min' }}</p>
+              <p v-if="(numOfSeason && numOfSeason != 0)">
+                {{ numOfSeason > 1 ? numOfSeason + ' Stagioni' : numOfSeason + ' Stagione' }}
+              </p>
             </div>
-            <p>{{ story }}</p>
+            <p v-if="story != ''">{{ story }}</p>
+            <p v-else>Nessuna descrizione per questo contenuto</p>
           </div>
 
           <div class="details__right">
@@ -63,6 +67,7 @@
           </div>
 
         </div>
+
       </div>
 
     </div>
@@ -81,10 +86,12 @@ export default {
     arrGenres: Array,
     releaseDate: String,
     runtime: Number,
+    numOfSeason: Number,
   },
   data() {
     return {
       hidden: false,
+      isPlural: true,
     };
   },
   methods: {
