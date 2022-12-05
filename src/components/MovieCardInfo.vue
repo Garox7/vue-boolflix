@@ -1,5 +1,5 @@
 <template>
-  <section class="container">
+  <section class="card__container">
     <div class="card-info">
       <div class="backdrop__img" :style="{backgroundImage: `url(${backdrop})`}">
         <div class="wrap__img"></div>
@@ -113,7 +113,7 @@ export default {
 <style lang="scss" scoped>
 @import '@/assets/scss/variables';
 
-.container {
+.card__container {
   background-color: rgba(0, 0, 0, 0.7);
   width: 100%;
   height: 100vh;
@@ -123,19 +123,17 @@ export default {
   z-index: 20;
   display: flex;
   justify-content: center;
-  align-items: center;
   transition: all .2s ease;
   box-shadow: rgb(0 0 0 / 75%) 0px 3px 10px;
 
   .card-info {
     background-color: #181818;
     max-width: 45%;
-    min-width: 800px;
+    min-width: 850px;
     max-height: 200vh;
-    min-height: 800px;
+    height: max-content;
     margin: 15vh 0 10vh;
     position: static;
-    // overflow: auto;
     border-radius: 10px;
     z-index: 40;
 

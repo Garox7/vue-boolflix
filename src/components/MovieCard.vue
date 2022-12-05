@@ -125,7 +125,7 @@ export default {
           });
         console.log('è un film!'); // DEBUG
 
-        // raccogli i film simili
+        // raccogli i film simili (6)
         axios.get(`${this.baseApiUrl}/movie/${this.id}/similar`, {
           params: {
             api_key: this.apiKey,
@@ -133,7 +133,7 @@ export default {
           },
         })
           .then((responseAxios) => {
-            this.similarMovie = responseAxios.data.results;
+            this.similarMovie = responseAxios.data.results.slice(0, 6);
 
             console.log('Altri film simili', this.arrGenres); // DEBUG
           });
