@@ -49,6 +49,8 @@
             :language="movie.original_language"
             :vote="convertScore(movie.vote_average)"
             :story="movie.overview"
+            :id="movie.id"
+            :movie="true"
           />
         </div>
       </div>
@@ -63,6 +65,8 @@
             :language="movie.original_language"
             :vote="convertScore(movie.vote_average)"
             :story="movie.overview"
+            :id="movie.id"
+            :movie="false"
           />
         </div>
       </div>
