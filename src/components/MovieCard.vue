@@ -60,8 +60,8 @@
       :language="language"
       :vote="vote"
       :story="story"
-      :id="id"
       :arrGenres="arrGenres"
+      :arrCast="arrCast"
       :releaseDate="releaseDate"
       :runtime="runtime"
       :numOfSeason="numOfSeason"
@@ -82,11 +82,11 @@ export default {
   },
   props: {
     cover: String,
+    backdrop: String,
     title: String,
     language: String,
     vote: Object,
     story: String,
-    backdrop: String,
     id: Number,
     movie: Boolean,
   },
@@ -97,6 +97,7 @@ export default {
       apiKey: '0762e7bce5e66e0277c5c0d33a1112fc',
       resultsLanguage: 'it-IT',
       arrGenres: [],
+      arrCast: [],
       releaseDate: '',
       numOfSeason: 0,
       runtime: 0,
@@ -105,9 +106,10 @@ export default {
   },
   methods: {
     // raccoglie ulteriori dati all'apertura di CardInfo
-    // Andrebbero spostati in MovieCardInfo???
     getDetails() {
       if (this.movie) {
+        console.log('è un film!'); // DEBUG
+        // GENERI, RILASCIO, DURATA
         axios.get(`${this.baseApiUrl}/movie/${this.id}`, {
           params: {
             api_key: this.apiKey,
@@ -122,22 +124,31 @@ export default {
             console.log('Genere Film:', this.arrGenres); // DEBUG
             console.log('Data di rilascio Film:', this.releaseDate); // DEBUG
             console.log('Durata FIlm:', this.runtime); // DEBUG
-          });
-        console.log('è un film!'); // DEBUG
+            // CAST
+            axios.get(`${this.baseApiUrl}/movie/${this.id}/credits`, {
+              params: {
+                api_key: this.apiKey,
+              },
+            })
+              .then((axiosCast) => {
+                this.arrCast = axiosCast.data.cast.splice(0, 5).map((actors) => actors.name);
+                console.log('cast:', this.arrCast);
+                // FILM SIMILI
+                axios.get(`${this.baseApiUrl}/movie/${this.id}/similar`, {
+                  params: {
+                    api_key: this.apiKey,
+                  },
+                })
+                  .then((axiosSimilar) => {
+                    this.similarMovie = axiosSimilar.data.results.splice(0, 6);
 
-        // raccogli i film simili (6)
-        axios.get(`${this.baseApiUrl}/movie/${this.id}/similar`, {
-          params: {
-            api_key: this.apiKey,
-            language: this.resultsLanguage,
-          },
-        })
-          .then((responseAxios) => {
-            this.similarMovie = responseAxios.data.results.slice(0, 6);
-
-            console.log('Altri film simili', this.arrGenres); // DEBUG
+                    console.log('Altri film simili', this.similarMovie); // DEBUG
+                  });
+              });
           });
       } else {
+        console.log('è una serie tv!'); // DEBUG
+        // GENERI, RILASCIO, DURATA
         axios.get(`${this.baseApiUrl}/tv/${this.id}`, {
           params: {
             api_key: this.apiKey,
@@ -152,8 +163,27 @@ export default {
             console.log('Generi Serie Tv:', this.arrGenres); // DEBUG
             console.log('Data di rilascio Serie Tv:', this.releaseDate); // DEBUG
             console.log('Numero di stagioni', this.numOfSeason); // DEBUG
+            // CAST
+            axios.get(`${this.baseApiUrl}/tv/${this.id}/credits`, {
+              params: {
+                api_key: this.apiKey,
+              },
+            })
+              .then((axiosCast) => {
+                this.arrCast = axiosCast.data.cast.splice(0, 5).map((actor) => actor.name);
+                // TITOLI SIMILI
+                axios.get(`${this.baseApiUrl}/tv/${this.id}/similar`, {
+                  params: {
+                    api_key: this.apiKey,
+                  },
+                })
+                  .then((axiosSimilar) => {
+                    this.similarMovie = axiosSimilar.data.results.splice(0, 6);
+
+                    console.log('altri serie tv simili:', this.similarMovie);
+                  });
+              });
           });
-        console.log('è una serie tv!'); // DEBUG
       }
     },
     // Apre MovieCardInfo

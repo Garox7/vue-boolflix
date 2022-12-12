@@ -66,7 +66,7 @@ export default {
     })
       .then((responseAxios) => {
         this.arrPopularTv = responseAxios.data.results;
-        console.log('SerieTv del momento', this.arrPopular); // DEBUG
+        console.log('SerieTv del momento', this.arrPopularTv); // DEBUG
       });
 
     // Film Più votati in Italia

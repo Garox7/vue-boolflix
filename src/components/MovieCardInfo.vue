@@ -42,12 +42,13 @@
                 </span>
                 <span>
                   <font-awesome-icon v-for="i in (vote.maxVote - vote.score)"
-                  :key="i"
-                  icon="fa-regular fa-star"
-                  style="color: gold"/>
+                    :key="i"
+                    icon="fa-regular fa-star"
+                    style="color: gold"
+                  />
                 </span>
               </div>
-              <p>{{ releaseDate.slice(0, 4) }}</p>
+              <!-- <p>{{ releaseDate.slice(0, 4) }}</p> -->
               <p v-if="runtime != ''">{{ runtime + ' min' }}</p>
               <p v-if="(numOfSeason && numOfSeason != 0)">
                 {{ numOfSeason > 1 ? numOfSeason + ' Stagioni' : numOfSeason + ' Stagione' }}
@@ -58,6 +59,12 @@
           </div>
 
           <div class="details__right">
+            <div class="details__info">
+              <span>Cast: </span>
+              <span v-for="actor in arrCast" :key="actor" >
+                {{ actor + ', ' }}
+              </span>
+            </div>
             <div class="details__info">
               <span>Generi: </span>
               <span v-for="genre in arrGenres" :key="genre.id">
@@ -77,7 +84,7 @@
 </template>
 
 <script>
-import SimilarTitle from '@/components/SimilarTitle.vue';
+import SimilarTitle from '@/components/SimilarTitles.vue';
 
 export default {
   name: 'MovieCardInfo',
@@ -91,6 +98,7 @@ export default {
     vote: Object,
     story: String,
     arrGenres: Array,
+    arrCast: Array,
     releaseDate: String,
     runtime: Number,
     numOfSeason: Number,
@@ -132,7 +140,7 @@ export default {
     min-width: 850px;
     max-height: 200vh;
     height: max-content;
-    margin: 15vh 0 10vh;
+    margin: 10vh 0 10vh;
     position: static;
     border-radius: 10px;
     z-index: 40;
@@ -264,8 +272,9 @@ export default {
           flex: 1 1 35%;
 
           .details__info {
-            font-size: 14px;
             color: white;
+            font-size: 14px;
+            margin: .5rem .5rem .5rem 0;
 
             span:first-child {
               color: #777777;

@@ -12,8 +12,10 @@
           </div>
         </div>
         <div class="similar-title__info">
-          <h3>{{ movie.title }}</h3>
-          <p>{{ movie.release_date.slice(0, 4) }}</p>
+          <h3 v-if="movie.title">{{ movie.title }}</h3>
+          <h3 v-else>{{ movie.name }}</h3>
+          <p v-if="movie.release_date">{{ movie.release_date.slice(0, 4) }}</p>
+          <p v-else>{{ movie.first_air_date.slice(0, 4) }}</p>
           <p>{{ movie.overview }}</p>
         </div>
       </div>
@@ -23,7 +25,7 @@
 
 <script>
 export default {
-  name: 'SimilarTitle',
+  name: 'SimilarTitles',
   props: {
     similarMovie: Array,
   },
