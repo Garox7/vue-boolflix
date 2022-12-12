@@ -66,6 +66,7 @@
       :runtime="runtime"
       :numOfSeason="numOfSeason"
       :similarMovie="similarMovie"
+      :episodesOfSeason="episodesOfSeason"
       @hiddenMovieCardInfo="hiddenMovieCardInfo"
     />
   </div>
@@ -99,9 +100,10 @@ export default {
       arrGenres: [],
       arrCast: [],
       releaseDate: '',
-      numOfSeason: 0,
       runtime: 0,
+      numOfSeason: 0,
       similarMovie: [],
+      episodesOfSeason: [],
     };
   },
   methods: {
@@ -124,6 +126,7 @@ export default {
             console.log('Genere Film:', this.arrGenres); // DEBUG
             console.log('Data di rilascio Film:', this.releaseDate); // DEBUG
             console.log('Durata FIlm:', this.runtime); // DEBUG
+
             // CAST
             axios.get(`${this.baseApiUrl}/movie/${this.id}/credits`, {
               params: {
@@ -132,7 +135,8 @@ export default {
             })
               .then((axiosCast) => {
                 this.arrCast = axiosCast.data.cast.splice(0, 5).map((actors) => actors.name);
-                console.log('cast:', this.arrCast);
+                console.log('cast:', this.arrCast); // DEBUG
+
                 // FILM SIMILI
                 axios.get(`${this.baseApiUrl}/movie/${this.id}/similar`, {
                   params: {
@@ -148,7 +152,8 @@ export default {
           });
       } else {
         console.log('è una serie tv!'); // DEBUG
-        // GENERI, RILASCIO, DURATA
+
+        // GENERI, RILASCIO, NUMERO STAGIONI
         axios.get(`${this.baseApiUrl}/tv/${this.id}`, {
           params: {
             api_key: this.apiKey,
@@ -163,6 +168,7 @@ export default {
             console.log('Generi Serie Tv:', this.arrGenres); // DEBUG
             console.log('Data di rilascio Serie Tv:', this.releaseDate); // DEBUG
             console.log('Numero di stagioni', this.numOfSeason); // DEBUG
+
             // CAST
             axios.get(`${this.baseApiUrl}/tv/${this.id}/credits`, {
               params: {
@@ -171,16 +177,30 @@ export default {
             })
               .then((axiosCast) => {
                 this.arrCast = axiosCast.data.cast.splice(0, 5).map((actor) => actor.name);
-                // TITOLI SIMILI
-                axios.get(`${this.baseApiUrl}/tv/${this.id}/similar`, {
+                console.log('cast:', this.arrCast); // DEBUG
+
+                // STAGIONI
+                axios.get(`${this.baseApiUrl}/tv/${this.id}/season/1`, {
                   params: {
                     api_key: this.apiKey,
+                    language: this.resultsLanguage,
                   },
                 })
-                  .then((axiosSimilar) => {
-                    this.similarMovie = axiosSimilar.data.results.splice(0, 6);
+                  .then((axiosSeason) => {
+                    this.episodesOfSeason = axiosSeason.data.episodes;
+                    console.log('Episodi della stagione:', this.episodesOfSeason); // DEBUG
 
-                    console.log('altri serie tv simili:', this.similarMovie);
+                    // TITOLI SIMILI
+                    axios.get(`${this.baseApiUrl}/tv/${this.id}/similar`, {
+                      params: {
+                        api_key: this.apiKey,
+                      },
+                    })
+                      .then((axiosSimilar) => {
+                        this.similarMovie = axiosSimilar.data.results.splice(0, 6);
+
+                        console.log('altri serie tv simili:', this.similarMovie);
+                      });
                   });
               });
           });
@@ -203,6 +223,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/scss/variables';
+@import '@/assets/scss/reset';
 
 .boxart__card {
   flex: 1 0 calc(100% / 6 - 3rem);
